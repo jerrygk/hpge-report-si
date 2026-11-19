@@ -1,11 +1,11 @@
-# Nuclear forensics with gamma-ray spectroscopy: supplementary information
+# Supplementary information for Nuclear Forensics with Gamma-Ray Spectroscopy
 
 Jerry Chen, Webb Wu, Aika Saito and Yuheng Wu
 Department of Physics and Astronomy, University College London
 
 This repository holds the data, code, results and figures behind our interim report on the PHAS0051 experiment *Nuclear Forensics with Gamma-Ray Spectroscopy* (autumn 2026). Every number, table and figure in the report can be traced to a file here and regenerated from the raw spectra.
 
-The report asks three questions of the spectra we had by mid-November: which fit gives honest peak areas and errors, how the errors fall with counting time, and why the third-floor detector performs worse than the basement one. It also compares the Cs-137/K-40 activity ratios of two Norwegian lake sediments.
+The report asks three questions of the spectra we had by mid-November. The first is which fit gives honest peak areas and errors, the second is how those errors fall as the counting time grows, and the third is why the third-floor detector performs worse than the basement one. It also compares the Cs-137/K-40 activity ratios of two Norwegian lake sediments.
 
 ## Contents
 
@@ -35,15 +35,15 @@ scripts/           make_figures.py, which draws the report figures from notebook
 | `run_hpge_Tuesday_testrun.csv` | basement, Lynx | Norway 2 sediment, second count | 27 to 29 Oct 2026 | 1.96 d | us | `6f3fc583b166` |
 | `run_hpge_Tuesday_testrun 2.csv` | | second download of the same run, identical | | | us | `6f3fc583b166` |
 
-The file names are kept exactly as the files were received, typos included, so that they match the checksums and the laboratory records.
+The file names are kept exactly as the files were received, typos included, in order that they match the checksums and the laboratory records.
 
-Our own third-floor detector was out of action from 20 October, so four of the basement spectra were shared with us by the Thursday group, the laboratory group that shares the basement detector with us, and they have agreed to their publication here. The Lynx files carry no calibration and their header start times are not reliable (notebook 1, "The time interval of each run, checked against an independent clock"), so the dates above come from the file names and download times.
+Our own third-floor detector was out of action from 20 October, and four of the basement spectra were therefore shared with us by the Thursday group, the laboratory group that shares the basement detector with us. They have agreed to the publication of these spectra here. The Lynx files carry no calibration, and their header start times are not reliable, as notebook 1 shows in the section "The time interval of each run, checked against an independent clock". The dates above were hence taken from the file names and the download times.
 
-The reference tables in `data/reference/` are taken from public sources: gamma lines, half-lives and emission probabilities from the ENSDF evaluations through NuDat 3 (Brookhaven National Laboratory), photon attenuation coefficients for Al, Ge and Pb from NIST XCOM, crustal abundances from Rudnick and Gao (Treatise on Geochemistry 3, 2003) and median soil activities from the UNSCEAR 2000 Report, Annex B.
+The reference tables in `data/reference/` were taken from public sources. The gamma lines, half-lives and emission probabilities come from the ENSDF evaluations through NuDat 3 (Brookhaven National Laboratory), and the photon attenuation coefficients for aluminium, germanium and lead from NIST XCOM. The crustal abundances come from Rudnick and Gao (Treatise on Geochemistry 3, 2003) and the median soil activities from the UNSCEAR 2000 Report, Annex B.
 
 ## Running the analysis
 
-The notebooks and the figure script were run with Python 3.11 and the package versions in `requirements.txt`. From the repository root:
+The notebooks and the figure script were run with Python 3.11 and the package versions listed in `requirements.txt`. The commands below, run from the repository root, install those packages, run the tests of the analysis module, execute the three notebooks in order and redraw the report figures.
 
 ```
 pip install -r requirements.txt
@@ -54,11 +54,13 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/3_interim_analysis
 python scripts/make_figures.py
 ```
 
-On a laptop the three notebooks take about 35 s, 100 s and 80 s. Each notebook finds the repository root by itself, so it can also be opened and run cell by cell in Jupyter. The simulations use fixed seeds, so a rerun reproduces the numbers in `results/` exactly. The one exception is the run timeline (`s2_timeline.csv`, `s3_timeline.csv`), which checks each file's header start time against its download time, read from the file's modification time. Git does not keep modification times, so after cloning that column reads "unknown". The shipped timeline files hold the values from the original downloads.
+On a laptop the three notebooks take about 35 s, 100 s and 80 s. Each notebook finds the repository root by itself, which means that it can also be opened and run cell by cell in Jupyter. Since the simulations use fixed seeds, a rerun reproduces the numbers in `results/` exactly. The one exception is the run timeline in `s2_timeline.csv` and `s3_timeline.csv`, which checks the start time in each file header against the time the file was downloaded, read from its modification time. Git does not keep modification times, and after cloning that column therefore reads "unknown". The timeline files shipped here hold the values from the original downloads.
 
-1. `1_lynx_spectra.ipynb` reads the four basement spectra, calibrates them without a stored calibration, measures the resolution and peak tail of the Lynx detector, and compares our fits with InterSpec. It writes `results/session2/`.
-2. `2_counting_time.ipynb` identifies our own run as a second count of the Norway 2 pot and compares the 1.96-day and 3.97-day counts: errors, detection limits, the radon change and the activity ratios. It writes `results/session3/`.
-3. `3_interim_analysis.ipynb` is the analysis behind the report: the K-40 peak fitted from first principles on both detectors, its statistical and systematic errors, simulated peaks, calibration and resolution, every background line, the comparison of the two backgrounds, the choice of fit statistic and peak shape, InterSpec, the counting-time summary, the plans, the projected significance, the lead estimate and the escape peaks. It writes `results/interim/`.
+The first notebook, `1_lynx_spectra.ipynb`, reads the four basement spectra and calibrates them without a stored calibration. It then measures the resolution and the peak tail of the Lynx detector and compares our fits with those of InterSpec, writing its tables to `results/session2/`.
+
+The second notebook, `2_counting_time.ipynb`, identifies our own run as a second count of the Norway 2 pot. It compares the 1.96-day and 3.97-day counts through their errors, detection limits, radon change and activity ratios, and writes its tables to `results/session3/`.
+
+The third notebook, `3_interim_analysis.ipynb`, holds the analysis behind the report and writes its tables to `results/interim/`. It fits the K-40 peak from first principles on both detectors and estimates the statistical and systematic errors of that fit, which are then tested on simulated peaks. It goes on to the calibration and resolution, every background line, the comparison of the two backgrounds and the choice of fit statistic and peak shape, and then compares the fits with InterSpec. The later sections summarise the counting-time results and cover the plans, the projected significance, the lead estimate and the escape peaks.
 
 ## Where each part of the report comes from
 
@@ -84,7 +86,7 @@ On a laptop the three notebooks take about 35 s, 100 s and 80 s. Each notebook f
 | Fig. C1, counting check of the errors | 19 | `figC1_counting_check`, `ir_error_prediction.csv` |
 | Fig. C2, fit window | 3, 4 | `figC2_window_scan`, `ir_k40_window_scan.csv`, `ir_k40_window_choice.csv` |
 
-Figure files are in `figures/report/` as PDF and PNG, and result files in `results/interim/` unless another folder is given. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay, and its planning section predates the final schedule. The schedule in the report is the one to follow. Section 14 compares the K-40 rate from the single-peak fit with the rate from the line table, which are Tables A3 and A5 of the report.
+The figure files are in `figures/report/` as PDF and PNG, and the result files are in `results/interim/` unless another folder is given. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay. Its planning section was written before the final schedule was agreed, and the schedule in the report is the one to follow. Section 14 compares the K-40 rate from the single-peak fit with the rate from the line table, which appear in the report as Tables A3 and A5.
 
 ## Contact
 

@@ -37,7 +37,7 @@ scripts/           make_figures.py, which draws the report figures from notebook
 
 The file names are kept exactly as the files were received, typos included, so that they match the checksums and the laboratory records.
 
-Our own third-floor detector was out of action from 20 October, so four of the basement spectra were shared with us by the Thursday group, the laboratory group that shares the basement detector with us. Their agreement to publish these spectra should be confirmed before this repository is made public. The Lynx files carry no calibration and their header start times are not reliable (notebook 1, "The time interval of each run, checked against an independent clock"), so the dates above come from the file names and download times.
+Our own third-floor detector was out of action from 20 October, so four of the basement spectra were shared with us by the Thursday group, the laboratory group that shares the basement detector with us, and they have agreed to their publication here. The Lynx files carry no calibration and their header start times are not reliable (notebook 1, "The time interval of each run, checked against an independent clock"), so the dates above come from the file names and download times.
 
 The reference tables in `data/reference/` are taken from public sources: gamma lines, half-lives and emission probabilities from the ENSDF evaluations through NuDat 3 (Brookhaven National Laboratory), photon attenuation coefficients for Al, Ge and Pb from NIST XCOM, crustal abundances from Rudnick and Gao (Treatise on Geochemistry 3, 2003) and median soil activities from the UNSCEAR 2000 Report, Annex B.
 

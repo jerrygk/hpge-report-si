@@ -1,6 +1,7 @@
 # Supplementary information for Nuclear Forensics with Gamma-Ray Spectroscopy
 
-Jerry Chen, Aika Saito, Webb Wu and Yuheng Wu
+Jerry Chen, Aika Saito, Webb Wu and Yuheng Wu (in alphabetical order of surname)
+
 Department of Physics and Astronomy, University College London
 
 This repository holds the data, code, results and figures behind our interim report on the PHAS0051 experiment *Nuclear Forensics with Gamma-Ray Spectroscopy* (autumn 2026). Every number, table and figure in the report can be traced to a file here and regenerated from the raw spectra.

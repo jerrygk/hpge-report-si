@@ -1,0 +1,9 @@
+nuclide,element,molar_mass_g_mol,half_life_y,isotopic_abundance,ucc_ppm,soil_median_Bq_kg,main_gamma_keV,gamma_emitter,gamma_yield,decay,note
+K-40,K,39.0983,1.248e9,0.000117,23200,400,1460.820,K-40,0.1066,beta- 89.1 % / EC 10.9 %,single line from the EC branch to Ar-40
+U-238,U,238.0289,4.468e9,0.992745,2.7,35,609.321,Bi-214 (chain),0.4544,alpha,parent emits almost no gammas; lines come from daughters in secular equilibrium
+U-235,U,238.0289,7.04e8,0.0072,2.7,,185.713,U-235,0.572,alpha,shortest-lived primordial parent still present in quantity
+Th-232,Th,232.0377,1.40e10,1.0,10.5,30,2614.511,Tl-208 (chain),0.3585,alpha,Tl-208 is reached in 35.94 % of chain decays and emits 2614.5 keV in 99.75 % of its decays
+Rb-87,Rb,85.4678,4.81e10,0.27835,84,,,none,0.0,beta- to ground state,no gamma ray at all
+La-138,La,138.9055,1.02e11,0.000902,31,,1435.795,La-138,0.656,EC 65.6 % / beta- 34.4 %,also 788.7 keV in the beta- branch
+Lu-176,Lu,174.9668,3.76e10,0.0259,0.31,,306.88,Lu-176,0.936,beta-,also 201.8 keV and 88.3 keV
+Sm-147,Sm,150.36,1.06e11,0.15,4.7,,,none,0.0,alpha,no gamma ray at all

@@ -1,0 +1,51 @@
+{
+  "DSPEC (3rd floor)": {
+    "file": "BkgRun5_Long.Chn",
+    "sha256": "40e52f417ef1ba7b0d19cdaebb5eddff80273a5378420a47239450e78bcc5110",
+    "live_s": 335457.22000000003,
+    "real_s": 335852.34,
+    "coefficients": [
+      0.2589994334350081,
+      0.19710264963544982
+    ],
+    "how": "linear",
+    "per_line_systematic_keV": 0.04297738465260443,
+    "tail_ratio": 0.49305687919475166,
+    "resolution_w_gaussian_core": [
+      1.1189232338150308,
+      0.03746366336179771,
+      0.0003825373502815955
+    ],
+    "resolution_w_whole_peak": [
+      1.2138279491567971,
+      0.040641254339722745,
+      0.0004149833362867844
+    ],
+    "k40_window_half_sigma": 7
+  },
+  "Lynx (basement)": {
+    "file": "backround_run_hpge_12_10.csv",
+    "sha256": "e2c0784a6e618b901b5e61f1cbee770efebd9c07d4bea27c8e1997a38e1e6ed4",
+    "live_s": 253696.79,
+    "real_s": 253745.97,
+    "coefficients": [
+      0.09435763275791942,
+      0.1683664701632663,
+      6.197686259285586e-09
+    ],
+    "how": "curvature from IAEA-385",
+    "per_line_systematic_keV": 0.17431060101229404,
+    "tail_ratio": 0.3975062817650821,
+    "resolution_w_gaussian_core": [
+      0.7571612006607057,
+      0.038259786917314555,
+      0.00039632649802442456
+    ],
+    "resolution_w_whole_peak": [
+      0.8029149244458197,
+      0.040571744689921835,
+      0.00042027577874618945
+    ],
+    "k40_window_half_sigma": 8
+  }
+}

@@ -1,0 +1,13 @@
+E_keV,label,origin
+510.999,annihilation,positrons (cosmic rays and pair production)
+2103.512,S.E. of Tl-208 2614.5,single escape
+1592.513,D.E. of Tl-208 2614.5,double escape
+72.805,Pb K-alpha2,X-ray
+74.969,Pb K-alpha1,X-ray
+84.94,Pb K-beta1,X-ray
+87.30,Pb K-beta2,X-ray
+74.815,Bi K-alpha2,X-ray
+77.108,Bi K-alpha1,X-ray
+87.34,Bi K-beta1,X-ray
+595.85,Ge-74(n n'),fast neutrons in the crystal
+691.4,Ge-72(n n'),fast neutrons in the crystal

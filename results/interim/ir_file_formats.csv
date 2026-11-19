@@ -1,0 +1,13 @@
+,DSPEC (3rd floor),Lynx (basement)
+file,BkgRun5_Long.Chn,backround_run_hpge_12_10.csv
+format,ortec-chn,lynx-csv
+channels,16384,16384
+first channel label,0,1
+live time (d),3.8826,2.9363
+real time (d),3.8872,2.9369
+dead time (%),0.118,0.019
+calibration stored in file,"(0.67636, 0.19664, 0.0)","(0.0, 1.0, 0.0)"
+bin width at 100 keV (keV),0.1971,0.16837
+bin width at 1460.8 keV (keV),0.1971,0.16847
+bin width at 2614.5 keV (keV),0.1971,0.16856
+full range (keV),3229.0,2760.0

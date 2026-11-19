@@ -1,0 +1,18 @@
+quantity,Norway 2 (3.97 d),new (1.96 d),ratio,expected,typical 2-day run (simulated),explanation
+total counts,785110.0,380802.0,0.48503012316745425,0.49216089518139616,,proportional to live time
+"relative noise per channel, 500-1000 keV (%)",19.392477647660904,27.752159197325543,1.4310785708536307,1.4293456734871177,,"Poisson, 1/sqrt(counts)"
+"Poisson dispersion D, 200-500 keV",0.9510877461082742,1.0342191805172873,1.0874066927569785,1.0,,pure Poisson noise in both
+K-40 net rate error (cpd),14.976120380910018,19.7652112239562,1.3197818073865653,1.2941793473399044,,"sample term x1.43, background term fixed"
+Cs-137 net rate error (cpd),11.087550432468214,14.111271801988188,1.272713200984905,1.2897345399765376,,almost no Cs-137 in the background
+K-40 significance z,22.59876334225853,18.011982799406454,0.797034002552032,0.7726904327869475,,z grows as sqrt(t)
+lines with z > 3 (of 19),12.0,11.0,0.9166666666666666,,,weak lines drop below the threshold
+peaks found with S > 5,18.0,15.0,0.8333333333333334,0.8113792340048704,14.7 +- 1.1,expected ratio from the simulations
+Am-241 59.5 keV detection limit (cpd),54.633992040120226,75.73723155567873,1.3862657427643479,1.4331274975124193,,"Currie, sqrt(B) term dominates"
+calibration lines used (of 13),12.0,10.0,0.8333333333333334,,10.2 +- 0.45,5 sigma selection loses weak lines
+calibration stat. error at 662 keV (eV),30.3528208356385,51.205541970994396,1.6870109782637355,1.4254318160331367,35.7 +- 9.1,"statistical, plus fewer lines"
+per-line systematic (eV),78.91884100029976,129.80423873161033,1.6447813612863027,1.0,83.7 +- 30,"ADC non-linearity, not statistics"
+Cs-137 energy total error (eV),91.82934087090445,149.7369603299551,1.6306004040741007,,,dominated by the systematic floor
+K-40 FWHM (keV),1.838125917168407,1.9776620697973164,1.075912183885564,1.0,1.83 +- 0.065,detector property
+Cs-137 energy - ENSDF (eV),83.20859135869796,112.68368412675045,1.3542313634536898,1.0,61.9 +- 54,ADC non-linearity at 662 keV
+"Cs-137/K-40 activity ratio, relative error (%)",8.699528397338456,11.474201621809396,1.318945245965267,1.273329825908295,,"fixed IAEA-385, background and certificate terms"
+"Th-232/K-40 activity ratio, relative error (%)",7.269777436035202,8.943541790726927,1.2302359830708332,1.26009677866073,,"fixed IAEA-385, background and certificate terms"

@@ -26,18 +26,18 @@ scripts/           make_figures.py, which draws the report figures from notebook
 
 | File | System | Sample | Recorded | Live time | Recorded by | SHA-256 (first 12) |
 |---|---|---|---|---|---|---|
-| `BkgRun5_Long.Chn` | third floor, ORTEC DSPEC-LF | empty shield | 3 to 7 Sep 2026 | 3.88 d | the demonstrator | `40e52f417ef1` |
-| `BkgRun5_Long_txt.Txt` | third floor | same run, Maestro text export | | | the demonstrator | `5dc3205d549c` |
-| `backround_run_hpge_12_10.csv` | basement, Mirion Lynx | empty shield | 12 to 15 Oct 2026 | 2.94 d | another laboratory group | `e2c0784a6e61` |
-| `thurs 15 oct - calibration sample 2 .csv` | basement, Lynx | IAEA-385 reference sediment | 15 to 19 Oct 2026 | 4.05 d | another laboratory group | `b0f17c64b25b` |
-| `Norway1_22_10.csv` | basement, Lynx | Norway 1 sediment | 19 to 22 Oct 2026 | 2.75 d | another laboratory group | `8a3859ab06b9` |
-| `norway sample 2 - 22 oct 2026.csv` | basement, Lynx | Norway 2 sediment | 22 to 26 Oct 2026 | 3.97 d | another laboratory group | `459790ea1bea` |
+| `BkgRun5_Long.Chn` | third floor, ORTEC DSPEC-LF | empty shield | 3 to 7 Sep 2026 | 3.88 d | the demonstrator, William Quinn | `40e52f417ef1` |
+| `BkgRun5_Long_txt.Txt` | third floor | same run, Maestro text export | | | the demonstrator, William Quinn | `5dc3205d549c` |
+| `backround_run_hpge_12_10.csv` | basement, Mirion Lynx | empty shield | 12 to 15 Oct 2026 | 2.94 d | the Thursday group | `e2c0784a6e61` |
+| `thurs 15 oct - calibration sample 2 .csv` | basement, Lynx | IAEA-385 reference sediment | 15 to 19 Oct 2026 | 4.05 d | the Thursday group | `b0f17c64b25b` |
+| `Norway1_22_10.csv` | basement, Lynx | Norway 1 sediment | 19 to 22 Oct 2026 | 2.75 d | the Thursday group | `8a3859ab06b9` |
+| `norway sample 2 - 22 oct 2026.csv` | basement, Lynx | Norway 2 sediment | 22 to 26 Oct 2026 | 3.97 d | the Thursday group | `459790ea1bea` |
 | `run_hpge_Tuesday_testrun.csv` | basement, Lynx | Norway 2 sediment, second count | 27 to 29 Oct 2026 | 1.96 d | us | `6f3fc583b166` |
 | `run_hpge_Tuesday_testrun 2.csv` | | second download of the same run, identical | | | us | `6f3fc583b166` |
 
 The file names are kept exactly as the files were received, typos included, so that they match the checksums and the laboratory records.
 
-Our own third-floor detector was out of action from 20 October, so four of the basement spectra were shared with us by another laboratory group. Their names will be added here with their permission, which should also be confirmed before this repository is made public. The Lynx files carry no calibration and their header start times are not reliable (notebook 1, "The time interval of each run, checked against an independent clock"), so the dates above come from the file names and download times.
+Our own third-floor detector was out of action from 20 October, so four of the basement spectra were shared with us by the Thursday group, the laboratory group that shares the basement detector with us. Their agreement to publish these spectra should be confirmed before this repository is made public. The Lynx files carry no calibration and their header start times are not reliable (notebook 1, "The time interval of each run, checked against an independent clock"), so the dates above come from the file names and download times.
 
 The reference tables in `data/reference/` are taken from public sources: gamma lines, half-lives and emission probabilities from the ENSDF evaluations through NuDat 3 (Brookhaven National Laboratory), photon attenuation coefficients for Al, Ge and Pb from NIST XCOM, crustal abundances from Rudnick and Gao (Treatise on Geochemistry 3, 2003) and median soil activities from the UNSCEAR 2000 Report, Annex B.
 

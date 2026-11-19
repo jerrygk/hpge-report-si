@@ -43,7 +43,7 @@ The reference tables in `data/reference/` are taken from public sources: gamma l
 
 ## Running the analysis
 
-The notebooks were run with Python 3.12 and the package versions in `requirements.txt`. From the repository root:
+The notebooks and the figure script were run with Python 3.11 and the package versions in `requirements.txt`. From the repository root:
 
 ```
 pip install -r requirements.txt
@@ -84,7 +84,7 @@ On a laptop the three notebooks take about 35 s, 100 s and 80 s. Each notebook f
 | Fig. C1, counting check of the errors | 19 | `figC1_counting_check`, `ir_error_prediction.csv` |
 | Fig. C2, fit window | 3, 4 | `figC2_window_scan`, `ir_k40_window_scan.csv`, `ir_k40_window_choice.csv` |
 
-Figure files are in `figures/report/` as PDF and PNG, and result files in `results/interim/` unless another folder is given. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay, and its planning section predates the final schedule. The schedule in the report is the one to follow.
+Figure files are in `figures/report/` as PDF and PNG, and result files in `results/interim/` unless another folder is given. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay, and its planning section predates the final schedule. The schedule in the report is the one to follow. Section 14 compares the K-40 rate from the single-peak fit with the rate from the line table, which are Tables A3 and A5 of the report.
 
 ## Contact
 

@@ -3,15 +3,15 @@
 Each figure answers one question of the report and is written to figures/report/ under the report's figure number:
 
   anatomy      Fig. 2   third-floor background spectrum and the photon interactions behind its features
-  errors       Fig. 4   pull widths of 1000 simulated K-40 peaks
+  errors       Fig. 4   pull widths of 1000 simulated K-40 peaks, together with Figs. A2 and C1
   shape        Fig. 5   choice of peak shape for the third-floor K-40 peak
   plan         Fig. 6   the remaining slots, live times and projected significance
   lynx         Fig. A1  the basement K-40 peak with Gaussian and EMG fits
-  statistic    Fig. A2  bias of the fitted area for the Poisson likelihood and Neyman's chi^2
+             Fig. A2  bias of the fitted area for the Poisson likelihood and Neyman's chi^2 (drawn by errors)
   calres       Fig. A3  calibration residuals and resolution of both detectors
   backgrounds  Fig. A4  the two background spectra and the third-floor to basement ratio of each line
   sediments    Fig. A5  the two sediments and the two counts of Norway 2
-  counting     Fig. C1  fitted area errors against the counting bounds
+             Fig. C1  fitted area errors against the counting bounds (drawn by errors)
   window_scan  Fig. C2  K-40 parameters against the fit window
 
 Figures 1 and 3 are diagrams drawn in TikZ (figures/report/tikz/).

@@ -104,7 +104,8 @@ def save(fig, name):
 
 def note(ax, x, y, text, **kw):
     kw.setdefault("fontsize", 9.5)
-    return ax.text(x, y, text, transform=ax.transAxes, va="top", **kw,
+    kw.setdefault("va", "top")
+    return ax.text(x, y, text, transform=ax.transAxes, **kw,
                    bbox=dict(fc="white", ec="0.8", alpha=0.92, pad=2.0))
 
 
@@ -120,13 +121,14 @@ if run("anatomy"):
     fig = plt.figure(figsize=(W, 3.9))
     gs = fig.add_gridspec(2, 1, height_ratios=[0.22, 1.0], hspace=0.04)
     top = fig.add_subplot(gs[0])
+    # colour key: a filled square per process, in the colour of the feature labels that process explains
     import matplotlib.patches as mpatches
     PH, CO, PA = "#8e44ad", C1, "#d68910"
     keys = [mpatches.Patch(color=PH, label="photoabsorption, dominant below 150 keV"),
             mpatches.Patch(color=CO, label="Compton scattering, dominant above 150 keV"),
             mpatches.Patch(color=PA, label="pair production, possible above 1022 keV"),
-            mpatches.Patch(color="k", label="full-energy peaks"),
-            mpatches.Patch(color="0.45", label="cosmic-ray muons")]
+            mpatches.Patch(color="k", label="full energy peaks"),
+            mpatches.Patch(color="0.45", label="cosmic ray muons")]
     top.legend(handles=keys, loc="center", ncol=2, frameon=False, fontsize=9, handlelength=1.0, handleheight=1.0,
                columnspacing=1.6, handletextpad=0.5)
     top.set(xlim=(20, 2750), ylim=(0, 1))
@@ -135,19 +137,19 @@ if run("anatomy"):
     ax.step(cen, y, where="mid", color="k", lw=0.6)
     ax.set(yscale="log", ylim=(0.8, 3e5), xlim=(20, 2750), xlabel="energy (keV), 3 keV bins",
            ylabel="counts per keV per day")
-    def mark(E, text, xy_text, c="k", ha="center"):
+    def mark(E, text, xy_text, c="k", ha="center", leader=True):
         i = int(np.argmin(abs(cen - E)))
         yy = y[max(0, i - 2):i + 3].max()
         ax.annotate(text, (E, yy * 1.15), xy_text, textcoords="data", ha=ha, va="bottom", fontsize=9, color=c,
-                    arrowprops=dict(arrowstyle="-", lw=0.6, color=c))
+                    arrowprops=dict(arrowstyle="-", lw=0.6, color=c) if leader else None)
     P, CE, ES = "k", C1, "#d68910"
     mark(80, "Pb X-rays,\nphotoabsorption\nin the shield", (300, 2.2e4), "#8e44ad", "left")
     mark(511, "annihilation,\n511 keV", (560, 4.0e3), ES, "left")
-    mark(1460.8, "K-40 full-energy\npeak, 1461 keV", (1460.8, 2.6e3))
-    mark(2614.5, "Tl-208,\n2614.5 keV", (2560, 6.0e2))
+    mark(1460.8, "K-40 full energy\npeak, 1461 keV", (1460.8, 2.6e3), leader=False)
+    mark(2614.5, "Tl-208,\n2614.5 keV", (2614.5, 6.0e2), leader=False)
     mark(2103.5, "single\nescape", (2103.5, 3.0e2), ES)
     mark(1592.5, "double\nescape", (1640, 4.0e2), ES)
-    for Ec, lab, xt, yt in ((1243.3, "Compton edge\nof K-40", 1060, 32), (2381.7, "Compton edge\nof Tl-208", 2080, 7.5)):
+    for Ec, lab, xt, yt in ((1243.3, "Compton edge\nof K-40", 1060, 32), (2381.7, "Compton edge\nof Tl-208", 1960, 7.5)):
         i = int(np.argmin(abs(cen - Ec)))
         ax.annotate(lab, (Ec, y[i] * 0.75), (xt, yt), ha="center", va="top", fontsize=9, color=CE,
                     arrowprops=dict(arrowstyle="->", lw=0.7, color=CE))
@@ -159,6 +161,7 @@ if run("errors"):
     ep = pd.read_csv(RES / "ir_error_prediction.csv")
     toys = pd.read_csv(RES / "ir_k40_toys.csv")
     st = pd.read_csv(RES / "ir_statistic_toys.csv")
+    # the counting check is its own appendix figure (counting), the pulls stay in the main text (errors)
     fig, ax = plt.subplots(figsize=(W, 2.5))
     inside = 0
     for k, dx in ((D1, -6), (D2, 6)):
@@ -167,11 +170,11 @@ if run("errors"):
         lo = np.ones(len(e))
         hi = e["sqrt(A+2B)"] / e["sqrt(A+B)"]
         y = e["fitted error"] / e["sqrt(A+B)"]
-        inside += int(((y >= lo) & (y <= hi)).sum())
+        inside += int(((y >= lo) & (y <= hi)).sum())   # strictly between the bounds, no tolerance
         ax.vlines(e.E + dx, lo, hi, color=COL[k], alpha=0.35, lw=4.0)
         ax.plot(e.E + dx, y, "o", color=COL[k], ms=3.6, label=SHORT[k])
     ax.set_xscale("log")
-    ax.set(xlabel="line energy (keV)", ylabel=r"fitted error / $\sqrt{A+B}$", ylim=(0.9, 1.85), xlim=(38, 3200))
+    ax.set(xlabel="line energy (keV)", ylabel=r"fitted error / $\sqrt{A+B}$", ylim=(0.9, 2.05), xlim=(38, 3200))
     ax.legend(loc="upper right", bbox_to_anchor=(1.0, 0.70), ncol=2, handlelength=1, borderpad=0.3, columnspacing=1.0)
     note(ax, 0.015, 0.95, f"bars run from $\\sqrt{{A+B}}$, background known, to $\\sqrt{{A+2B}}$, background\nfitted from as many channels as the peak. {inside} of {len(ep)} errors lie between them, the rest just outside", fontsize=9)
     ax.set_title("fitted errors of every background line against counting statistics", pad=3)
@@ -194,6 +197,7 @@ if run("errors"):
 
     save(fig, "errors")
 
+    # the fit statistic (Appendix A)
     fig, ax = plt.subplots(figsize=(W, 2.7))
     sizes = {"K-40 as on the 3rd floor (23 000 counts)": 23000, "K-40 as in the basement (500 counts)": 500,
              "weak line (100 counts)": 100}
@@ -238,10 +242,10 @@ if run("shape"):
         a = fig.add_subplot(left[1 + i_], sharex=ax)
         a.bar(E, (r["y"] - f_) / np.sqrt(f_), width=float(g.cal[k].gain(r["p"][1])), color=c, alpha=0.8)
         a.axhline(0, color="k", lw=0.5)
-        a.set(ylim=(-4.5, 4.5), yticks=[-3, 0, 3], ylabel=r"$(n-f)/\sqrt{f}$")
+        a.set(ylim=(-4.5, 7.0), yticks=[-3, 0, 3], ylabel=r"$(n-f)/\sqrt{f}$")
         if i_ == 0:
             a.axvspan(1457.4, 1459.4, color="0.85", zorder=0, lw=0)
-            a.text(1458.4, -4.2, "low-energy excess", ha="center", va="bottom", fontsize=9, color="0.25")
+            a.text(1458.4, -4.2, "low energy excess", ha="center", va="bottom", fontsize=9, color="0.25")
             a.tick_params(labelbottom=False)
         else:
             a.set_xlabel("energy (keV)")
@@ -320,6 +324,7 @@ if run("plan"):
         ax.text(day(s_) + 0.08, 2.62, lab + " (Tue)", fontsize=9, va="center")
     ax.set_yticks([2], ["basement\ndetector"])
     ax.set_ylim(1.45, 2.85)
+    # last data session 8 Dec (S8), then a week of analysis only to 15 Dec
     ax.add_patch(mpatches.Rectangle((day(22.0), 2 - 0.39), day(26.0) - day(22.0), 0.78, fc="0.93", ec="none", lw=0))
     for yy in (2 - 0.39, 2 + 0.39):
         ax.plot([day(22.0), day(26.0)], [yy, yy], color="0.6", lw=0.5)
@@ -331,7 +336,7 @@ if run("plan"):
     ax.grid(False)
     ax.spines["left"].set_visible(False)
     ax.tick_params(axis="y", length=0)
-    ax.set_title("(a) our half-week slots on the shared basement detector (work in each week in Table 2)", pad=3)
+    ax.set_title("(a) our half week slots on the shared basement detector (work in each week in Table 2)", pad=3)
 
     # (b) live time per spectrum, recorded and planned, with the factor by which its counting errors fall
     ax = fig.add_subplot(gs[1, 0])
@@ -343,7 +348,7 @@ if run("plan"):
             ax.text(now + add + 0.2, i, f"errors $\\times${np.sqrt(now / (now + add)):.2f}", va="center", fontsize=9)
     ax.set_yticks(range(len(LT)), [x[0] for x in LT])
     ax.invert_yaxis()
-    ax.set(xlabel="live time (d)", xlim=(0, 11.5))
+    ax.set(xlabel="live time $t$ (d), errors scale as $1/\\sqrt{t}$", xlim=(0, 11.5))
     ax.grid(axis="y", alpha=0)
     ax.legend(handles=[mpatches.Patch(fc="0.55", ec="k", lw=0.5, label="recorded"),
                        mpatches.Patch(fc="white", ec="k", lw=0.5, hatch="////", label="planned")],
@@ -355,16 +360,18 @@ if run("plan"):
     for ab, ls, lab in ((0, "--", "background as now"), (3.5, "-", "background + 3.5 d")):
         c_ = curve[(curve.add_bkg == ab) & (~curve.shared)]
         ax.plot(c_.add_n1, c_.Z, ls, color="k", lw=1.1, label=lab)
+
+        ax.text(float(c_.add_n1.iloc[-1]) + 0.2, float(c_.Z.iloc[-1]), lab.replace(" + ", "\n+ ").replace(" as", "\nas"),
+                va="bottom", fontsize=9)                  # labels sit above the curve ends, clear of the note box
     ax.plot(0, z_now, "o", color=C2, ms=5)
-    ax.annotate(f"today {z_now:.1f}", (0, z_now), (0.45, z_now + 0.3), fontsize=9, color=C2,
+    ax.annotate(f"today\n{z_now:.1f}", (0, z_now), (0.45, 3.05), fontsize=9, color=C2,
                 arrowprops=dict(arrowstyle="-", lw=0.6, color=C2))
     ax.plot(2.75, z_plan, "o", color="k", ms=5)
-    ax.annotate(f"plan {z_plan:.1f}", (2.75, z_plan), (3.5, 5.3), fontsize=9,
+    ax.annotate(f"plan {z_plan:.1f}, after the\n2.75 d slot (dotted)", (2.75, z_plan), (-0.1, 7.6), fontsize=9,
                 arrowprops=dict(arrowstyle="-", lw=0.6))
-    ax.axvline(2.75, color="0.6", lw=0.7, ls=":")
-    ax.set(xlabel="extra days on Norway 1", ylabel="Cs-137/K-40 difference ($\\sigma$)", xlim=(-0.3, 7.2), ylim=(3.6, 8.6))
-    ax.legend(loc="upper left", fontsize=9, frameon=False)
-    note(ax, 0.40, 0.25, "backgrounds of the two\nsamples independent,\ncurves include our Norway 2\nrecount, so start above 4.2", fontsize=9)
+    ax.plot([2.75, 2.75], [2.6, z_plan], color="0.6", lw=0.7, ls=":")
+    ax.set(xlabel="extra days on Norway 1", ylabel="Cs-137/K-40 difference ($\\sigma$)", xlim=(-0.3, 9.9), ylim=(2.6, 9.0), xticks=[0, 2, 4, 6])
+    note(ax, 0.975, 0.025, "backgrounds of the two\nsamples independent,\ncurves include our\nNorway 2 recount,\nhence they start\nabove 4.2", fontsize=8.5, ha="right", va="bottom", multialignment="left")
     ax.set_title("(c) significance gained", pad=3)
     print(f"projection: today {z_now:.2f}, after Norway 1 slot {z_n1:.2f}, plan {z_plan:.2f}, plan shared {z_plan_sh:.2f}")
     fig.savefig(FIG / "fig6_plan.pdf", bbox_inches="tight", pad_inches=0.03)
@@ -395,7 +402,7 @@ if run("lynx"):
         a = fig.add_subplot(gs[1 + i_], sharex=ax)
         a.bar(E, (r["y"] - f_) / np.sqrt(f_), width=float(g.cal[k].gain(r["p"][1])), color=c, alpha=0.8)
         a.axhline(0, color="k", lw=0.5)
-        a.set(ylim=(-4.5, 4.5), yticks=[-3, 0, 3], ylabel=r"$(n-f)/\sqrt{f}$")
+        a.set(ylim=(-4.5, 7.0), yticks=[-3, 0, 3], ylabel=r"$(n-f)/\sqrt{f}$")
         if i_ == 0:
             a.tick_params(labelbottom=False)
         else:
@@ -412,7 +419,8 @@ if run("lynx"):
 # ============================================================ calres: shared Fano factor, different noise
 if run("calres"):
     # Eq. (1) describes the Gaussian core of a peak (charge statistics and noise); the trapping tail is modelled apart by
-    # core fit (the full FWHM is 1.085 x (DSPEC) and 1.060 x (Lynx) the core, so the full-FWHM fit gives F = 0.10).
+    # the EMG, hence w0 and F are both taken from the core width (the full FWHM is 1.085 x (DSPEC) and 1.060 x (Lynx)
+    # the core, and a fit to the full FWHM would give F = 0.10).
     rows = []
     fig = plt.figure(figsize=(W, 4.7))
     gs = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.2], hspace=0.55, wspace=0.12)
@@ -429,9 +437,9 @@ if run("calres"):
     ur = ur[ur.used]
     ax.plot(ur.E_ref, 1000 * ur.resid_keV, "s", ms=3.4, mfc="none", color=GREY, label="IAEA-385 on the Lynx, which sets its curvature")
     ax.axhline(0, color="k", lw=0.5)
-    ax.set(xlabel="energy (keV)", ylabel="fitted minus\nreference (eV)", ylim=(-480, 980))
+    ax.set(xlabel="energy (keV)", ylabel="fitted minus\nreference (eV)", ylim=(-480, 1180))
     ax.legend(loc="upper center", ncol=1, handlelength=1, borderpad=0.3, labelspacing=0.15, fontsize=8.8)
-    ax.set_title("(a) energy calibration residuals, with per-line systematic bands", pad=3)
+    ax.set_title("(a) energy calibration residuals, with systematic error bands per line", pad=3)
     Eg = np.linspace(0, 2700, 300)
     for j, k in enumerate((D1, D2)):
         a = fig.add_subplot(gs[1, j])
@@ -453,7 +461,10 @@ if run("calres"):
         a.set(xlabel="energy (keV)", ylim=(0, 7.2), xlim=(0, 2700))
         if j == 0:
             a.set_ylabel(r"core FWHM$^2$ (keV$^2$)")
-            a.legend(loc="lower right", handlelength=1, borderpad=0.3, fontsize=8.5, labelspacing=0.15)
+
+            hh, ll = a.get_legend_handles_labels()
+            fig.legend(hh, ll, loc="upper center", bbox_to_anchor=(0.5, 0.0), ncol=4, handlelength=1, fontsize=8.5,
+                       columnspacing=1.2, frameon=False)
         else:
             a.tick_params(labelleft=False)
         a.set_title("(b) core width split into the terms of Eq. (3)" if j == 0 else "(c)", pad=3)
@@ -473,7 +484,7 @@ if run("backgrounds"):
     # one label per nuclide, with its offset in points
     LABELS = {"K-40 1460.8": ("K-40", (6, -3)), "Tl-208 583.2": ("Tl-208", (-36, 4)), "Tl-208 2614.5": ("Tl-208", (-14, -15)),
               "Ac-228 911.2": ("Ac-228", (6, -4)), "Pb-212 238.6": ("Pb-212", (6, -4)), "Cs-137 661.7": ("Cs-137", (7, -9)),
-              "Pb K-alpha1 X-ray 75.0": (r"Pb K$\alpha_1$ X-ray", (6, -4)), "Pb-210 46.5": ("Pb-210", (6, -4)),
+              "Pb K-alpha1 X-ray 75.0": (r"Pb K$\alpha_1$ X ray", (6, -4)), "Pb-210 46.5": ("Pb-210", (6, -4)),
               "Pb-214 295.2": ("Pb-214", (-6, -13)), "Bi-214 609.3": ("Bi-214", (-44, 2)), "annihilation 511.0": ("annihilation", (6, -6))}
     total_ratio = 5.93 / 1.56
     fig = plt.figure(figsize=(W, 6.6))
@@ -552,8 +563,9 @@ if run("sediments"):
     gross = (a3.s_gross_cpd / n2.s_gross_cpd)[det]
     netr = (a3.s_net_cpd / n2.s_net_cpd)[det]
     pred = np.sqrt(3.974 / 1.956)
-    ax.hist(gross, bins=np.arange(1.1, 1.56, 0.025), color="0.35", alpha=0.8, label=f"gross, mean {gross.mean():.2f}")
-    ax.hist(netr, bins=np.arange(1.1, 1.56, 0.025), color=C2, alpha=0.6, label=f"net, mean {netr.mean():.2f}")
+
+    ax.hist([gross, netr], bins=np.arange(1.1, 1.56, 0.025), color=["0.35", C2], alpha=0.85,
+            label=[f"gross, mean {gross.mean():.2f}", f"net, mean {netr.mean():.2f}"])
     ax.axvline(pred, color="k", ls="--", lw=0.9)
     ax.text(pred + 0.008, 4.6, f"Poisson\nprediction\n{pred:.2f}", fontsize=9, va="top")
     ax.set(xlabel="error ratio, 1.96 d run / 3.97 d run", ylabel="lines", ylim=(0, 6.5), xlim=(1.1, 1.62))
@@ -580,7 +592,6 @@ if run("sediments"):
     ax.grid(axis="x", alpha=0)
     ax.set_title("(c) two counts of the Norway 2 pot, gross rates (grey band ±2)", pad=3)
     save(fig, "sediments")
-
 # ============================================================ window scan: K-40 parameters against the fit window (Fig. C2)
 if run("window_scan"):
     fig, axes = plt.subplots(3, 2, figsize=(6.3, 4.6), sharex=True)
@@ -600,7 +611,7 @@ if run("window_scan"):
                 ax.set_ylabel(lab + (" (counts)" if q == "A" else " (ch)"))
             if i == 0:
                 ax.set_title("DSPEC (3rd floor)" if k == D1 else "Lynx (basement)", pad=2)
-        axes[2, j].set_xlabel(r"half-width $k$ ($\sigma$)", labelpad=1)
+        axes[2, j].set_xlabel(r"half width $k$ ($\sigma$)", labelpad=1)
     axes[0, 0].legend(loc="lower right", handlelength=1.0, borderpad=0.3, labelspacing=0.2)
     fig.tight_layout(pad=0.2, h_pad=0.3, w_pad=0.4)
     save(fig, "window_scan")

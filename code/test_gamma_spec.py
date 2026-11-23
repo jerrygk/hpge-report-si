@@ -103,6 +103,18 @@ def test_lynx_reader_on_session2_files():
         assert s.live < s.real and s.start is not None
 
 
+
+def test_emg_window_is_centred_on_the_mode():
+    from scipy import stats
+    sigma, beta, half = 1.0, 0.39751, 1.25 * 2.49712
+    right = stats.exponnorm(beta / sigma)              # right-tailed law; its mirror image is the left-tailed peak
+    d = G.emg_mode(0.0, sigma, beta)
+    assert d < 0
+    expected = right.sf(-(d + half)) - right.sf(-(d - half))
+    assert abs(G.emg_window_fraction(sigma, beta, half) - expected) < 1e-6
+    assert abs(G.emg_window_fraction(sigma, 1e-9, 2.0) - (stats.norm.cdf(2) - stats.norm.cdf(-2))) < 1e-6
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

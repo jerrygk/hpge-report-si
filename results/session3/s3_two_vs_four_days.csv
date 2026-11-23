@@ -7,7 +7,7 @@ Cs-137 net rate error (cpd),11.087550432468214,14.111271801988188,1.272713200984
 K-40 significance z,22.59876334225853,18.011982799406454,0.797034002552032,0.7726904327869475,,z grows as sqrt(t)
 lines with z > 3 (of 19),12.0,11.0,0.9166666666666666,,,weak lines drop below the threshold
 peaks found with S > 5,18.0,15.0,0.8333333333333334,0.8113792340048704,14.7 +- 1.1,expected ratio from the simulations
-Am-241 59.5 keV detection limit (cpd),54.633992040120226,75.73723155567873,1.3862657427643479,1.4331274975124193,,"Currie, sqrt(B) term dominates"
+Am-241 59.5 keV detection limit (cpd),53.9865835391819,74.8397513292535,1.3862657427643477,1.4331274975124193,,"Currie, sqrt(B) term dominates"
 calibration lines used (of 13),12.0,10.0,0.8333333333333334,,10.2 +- 0.45,5 sigma selection loses weak lines
 calibration stat. error at 662 keV (eV),30.3528208356385,51.205541970994396,1.6870109782637355,1.4254318160331367,35.7 +- 9.1,"statistical, plus fewer lines"
 per-line systematic (eV),78.91884100029976,129.80423873161033,1.6447813612863027,1.0,83.7 +- 30,"ADC non-linearity, not statistics"

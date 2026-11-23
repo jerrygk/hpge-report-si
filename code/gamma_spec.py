@@ -413,6 +413,12 @@ def emg_mode(mu, sigma, beta):
     return float(optimize.brentq(f, lo, mu, xtol=1e-12))
 
 
+def emg_window_fraction(sigma, beta, half):
+    """Fraction of a left-tailed EMG peak (Gaussian width sigma, tail length beta) that lies within mode +/- half."""
+    d = emg_mode(0.0, sigma, beta)                     # mode relative to mu, negative for a left tail
+    return float(emg_cdf(d + half, 0.0, sigma, beta) - emg_cdf(d - half, 0.0, sigma, beta))
+
+
 def emg_fwhm(mu, sigma, beta):
     """Full width at half maximum of the EMG (equals 2.3548 sigma for beta = 0)."""
     if beta <= 1e-6 * sigma:
@@ -554,11 +560,12 @@ def fit_roi(counts, centres, sigma0, *, shape="emg", beta0=None, step="free", si
         cov[np.ix_(idx, idx)] = np.linalg.pinv(J.T @ (J / f[:, None]))
     dev = float(poisson_deviance(y, f))
     ndf = len(x) - len(idx)
+    n_nonpositive = int(np.sum(model(theta) <= 0))     # channels where the clip at 1e-12 would hide a negative model
     names = SHARED + [f"{p}{k + 1}" for k in range(n) for p in ("A", "mu")]
     at_bound = [names[i] for i in idx if np.isclose(theta[i], lb[i], atol=1e-6) or np.isclose(theta[i], ub[i], atol=1e-6)]
     return dict(theta=theta, err=np.sqrt(np.clip(np.diag(cov), 0, None)), cov=cov, names=names, free=free,
                 x=x, y=y, model=f, x0=x0, n_peaks=n, shape=shape, tail_ratio=tail_ratio if shape == "emg" else None,
-                dev=dev, ndf=ndf, k=len(idx),
+                dev=dev, ndf=ndf, k=len(idx), n_nonpositive=n_nonpositive,
                 pval=float(stats.chi2.sf(dev, ndf)), ok=bool(sol.success), at_bound=at_bound,
                 aic=dev + 2 * len(idx), bic=dev + len(idx) * np.log(len(x)))
 
@@ -1006,7 +1013,7 @@ def fit_line_at(spec: Spectrum, cal: Calibration, E, sigma_keV, tail_ratio, shap
                   step=step, sigma_free=free_width, half=half)
     p = peak(fit, 0)
     p.update(E_fit=float(cal.energy(p["position"])), rate=p["A"] / spec.live, s_rate=p["sA"] / spec.live,
-             dev=fit["dev"], ndf=fit["ndf"], pval=fit["pval"])
+             dev=fit["dev"], ndf=fit["ndf"], pval=fit["pval"], n_nonpositive=fit["n_nonpositive"])
     return p, fit
 
 

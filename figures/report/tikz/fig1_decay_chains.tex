@@ -56,7 +56,7 @@
 \node[cnuc] (t7) at (7*\dx,-4.4) {{\nuc{208}{Tl}}\\3.05\,min};
 \foreach \a/\b in {t0/t1,t1/t2,t2/t3,t3/t4,t4/t5,t5/t6} \draw[cch] (\a) -- (\b);
 \draw[cch] (t6) -- (t7);
-\node[font=\footnotesize, gray!40!black] at ($(t6)!0.5!(t7)+(0,0.68)$) {35.9\,\%};
+\node[font=\footnotesize, gray!40!black] at ($(t6)!0.5!(t7)+(0,0.68)$) {35.9\,\% branch};
 \node[clin, blue!60!black] at (t2.south) {911.2\\969.0};
 \node[clin, orange!80!black] at (t5.south) {238.6};
 \node[clin, orange!80!black] at (t7.south) {583.2\\2614.5};
@@ -67,6 +67,6 @@
 \node[clin] at (k.south) {1460.8};
 \node[cnuc] (c) at (2*\dx,-8.35) {{\nuc{137}{Cs}}\\30.1\,y};
 \node[clin] at (c.south) {661.7};
-\node[cnote, text width=9.6cm] at (4.75,-7.95) {{\nuc{40}{K}} is primordial. {{\nuc{137}{Cs}}} is man-made, from weapons tests and Chernobyl (1986), hence its depth profile carries a date. Grey boxes: long-lived parents. Lines in keV, under the nuclide that emits them~[8].};
+\node[cnote, text width=9.6cm] at (4.75,-7.95) {{\nuc{40}{K}} is primordial. {{\nuc{137}{Cs}}} is artificial, from weapons tests and Chernobyl (1986), hence its depth profile carries a date. Grey boxes: long lived parents. Lines in keV, under the nuclide that emits them~[8].};
 \end{tikzpicture}
 \end{document}

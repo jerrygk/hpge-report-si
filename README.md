@@ -4,7 +4,7 @@ Jerry Chen, Aika Saito, Webb Wu and Yuheng Wu (in alphabetical order of surname)
 
 Department of Physics and Astronomy, University College London
 
-This repository holds the data, code, results and figures behind our interim report on the PHAS0051 experiment *Nuclear Forensics with Gamma-Ray Spectroscopy* (autumn 2026). Every number, table and figure in the report can be traced to a file here and regenerated from the raw spectra.
+This repository holds the data, code, results and figures behind our interim report on the PHAS0051 experiment *Nuclear Forensics with Gamma-Ray Spectroscopy* (autumn 2026). The submitted report cites version [v1.0-interim](https://github.com/jerrygk/hpge-report-si/tree/v1.0-interim), and every number, table, figure and code listing in it can be traced to that version and regenerated from the raw spectra. The current version, v1.1, corrects errors that were found after the report was submitted, and they are listed under [Bug corrections](#bug-corrections-of-23-november-2026-version-11) below.
 
 The report asks three questions of the spectra we had by mid-November. The first is which fit gives honest peak areas and errors, the second is how those errors fall as the counting time grows, and the third is why the third-floor detector performs worse than the basement one. It also compares the Cs-137/K-40 activity ratios of two Norwegian lake sediments.
 
@@ -65,6 +65,8 @@ The third notebook, `3_interim_analysis.ipynb`, holds the analysis behind the re
 
 ## Where each part of the report comes from
 
+The figure, table, appendix and section numbers below are those of the submitted report, and they hold for both versions of this repository. The code listings of Appendix C.1 are copied from [v1.0-interim](https://github.com/jerrygk/hpge-report-si/tree/v1.0-interim). In v1.1 they differ only in the last line of `fit_peak`, which now also returns the number of channels where the model fell to zero or below, and the functions and notebook sections named in Table C1 are unchanged.
+
 | Report | Notebook 3 section | Files |
 |---|---|---|
 | Fig. 1, decay series | | `figures/report/tikz/fig1_decay_chains.tex` |
@@ -86,8 +88,10 @@ The third notebook, `3_interim_analysis.ipynb`, holds the analysis behind the re
 | Fig. A5, the two sediments | 10 | `figA5_sediments`, `results/session3/` |
 | Fig. C1, counting check of the errors | 19 | `figC1_counting_check`, `ir_error_prediction.csv` |
 | Fig. C2, fit window | 3, 4 | `figC2_window_scan`, `ir_k40_window_scan.csv`, `ir_k40_window_choice.csv` |
+| Appendix C.1, peak model and fit | 3 | `code/gamma_spec.py`, `fit_peak` in Section 3 |
+| Table C1, the remaining code | 2 to 23 | `code/gamma_spec.py` and the sections named in the table |
 
-The figure files are in `figures/report/` as PDF and PNG, and the result files are in `results/interim/` unless another folder is given. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay. Its planning section was written before the final schedule was agreed, and the schedule in the report is the one to follow. Section 14 compares the K-40 rate from the single-peak fit with the rate from the line table, which appear in the report as Tables A3 and A5.
+The figure files are in `figures/report/` as PDF and PNG, and the result files are in `results/interim/` unless another folder is given. In v1.1 the figures are drawn from the corrected results, and the figures exactly as submitted are those of v1.0-interim. Notebook 3 also holds analyses that the report does not use, among them a radon ingrowth table, the split of counting time between sample and background, self-absorption estimates and a limit on neutrinoless double beta decay. Its planning section was written before the final schedule was agreed, and the schedule in the report is the one to follow. Section 14 compares the K-40 rate from the single-peak fit with the rate from the line table, which appear in the report as Tables A3 and A5.
 
 ## Bug corrections of 23 November 2026 (version 1.1)
 
